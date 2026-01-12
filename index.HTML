@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+       name="viewport"
+       content="width=device-width, initial-scale=1.0" />
+    <title>Turn by Turn Game</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="header">
+      <header>
+        <h1>Introduction</h1>
+      </header>
+    </div>
+    <main id="main">
+      <p id="headerPara"></p>
+      <p id="mainPara"></p>
+      <p id="footerPara"></p>
+      <fieldset id="playerPassionQuestion">
+        <legend>What were your passion during your childhood?</legend>
+        <div>
+          <input type="radio" name="passion" id="swordFight" checked />
+          <label for="swordFight"><strong>Sword fighting</strong></label>
+        </div>
+        <div>
+          <input type="radio" name="passion" id="survivalism" />
+          <label for="survivalism"><strong>Survivalism</strong></label>
+        </div>
+      </fieldset>
+      
+      <div id="playerTextInput">
+        <label id="order">You said :</label>
+        <input id="name" type="text" size="32" />
+        <button id="btnName" type="button">Valider </button>
+        <button id="btnPassion" type="button">Valider </button>
+        <button id="btnContinue" type="button">Continue </button>
+      </div>
+    </main>
+    <footer>
+      <p></p>
+    </footer>
+    <script src="./script.js"></script>
+  </body>
+</html>

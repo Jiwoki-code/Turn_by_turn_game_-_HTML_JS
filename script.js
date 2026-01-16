@@ -20,7 +20,6 @@ btnStart.style.display = "none";
 const btnAttack = document.getElementById("btnAttack");
 const btnChance = document.getElementById("btnChance");
 btnChance.style.display = "none";
-const btnFleeing = document.getElementById("btnFleeing");
 const btnQuestion = document.getElementById("btnQuestion");
 btnQuestion.style.display = "none";
 const btnGoNext = document.getElementById("btnGoNext");
@@ -182,42 +181,42 @@ function creatMonster(monsterNmbr) {
                         case 1:
                                 console.log("A SLIME appears!");
                                 monsterName = `${i + 1} - SLIME`;
-                                monsterHabilite = getRandomIntInclusive(6, 8);
+                                monsterHabilite = getRandomIntInclusive(6, 10);
                                 monsterEndurence = getRandomIntInclusive(3, 5);
                                 monsterDamage = 1;
                                 break;
                         case 2:
                                 console.log("A DEMON appears!");
                                 monsterName = `${i + 1} - DEMON`;
-                                monsterHabilite = getRandomIntInclusive(7, 9);
+                                monsterHabilite = getRandomIntInclusive(7, 11);
                                 monsterEndurence = getRandomIntInclusive(4, 6);
                                 monsterDamage = 2;
                                 break;
                         case 3:
                                 console.log("A ZOMBIE appears!");
                                 monsterName = `${i + 1} - ZOMBIE`;
-                                monsterHabilite = getRandomIntInclusive(6, 8);
+                                monsterHabilite = getRandomIntInclusive(6, 10);
                                 monsterEndurence = getRandomIntInclusive(5, 7);
                                 monsterDamage = 2;
                                 break;
                         case 4:
                                 console.log("A SKELETON appears!");
                                 monsterName = `${i + 1} - SKELETON`;
-                                monsterHabilite = getRandomIntInclusive(8, 10);
+                                monsterHabilite = getRandomIntInclusive(8, 12);
                                 monsterEndurence = getRandomIntInclusive(2, 4);
                                 monsterDamage = 2;
                                 break;
                         case 5:
                                 console.log("A SHRIMP appears!");
                                 monsterName = `${i + 1} - SHRIMP`;
-                                monsterHabilite = getRandomIntInclusive(10, 12);
+                                monsterHabilite = getRandomIntInclusive(10, 14);
                                 monsterEndurence = 1;
                                 monsterDamage = 0;
                                 break;
                         case 6:
                                 console.log("A BOSS appears!");
                                 monsterName = `${i + 1} - BOSS`;
-                                monsterHabilite = getRandomIntInclusive(10, 12);
+                                monsterHabilite = getRandomIntInclusive(10, 14);
                                 monsterEndurence = 7;
                                 monsterDamage = 3;
                                 break;
@@ -295,19 +294,19 @@ function isUsingLuck() {
         if (getHit) {
                 if (isLucky) {
                         currentEndurence -= actualMonster[4] - 1;
-                        combatLogPara += `but you're lucky and the monster only gives you a scratch.`;
+                        combatLog.innerHTML += `but you're lucky and the monster only gives you a scratch.`;
                 } else {
                         currentEndurence -= actualMonster[4] + 1;
-                        combatLogPara += `you're not lucky and the injury is serious.`;
+                        combatLog.innerHTML += `you're not lucky and the injury is serious.`;
                 }
 
-        } else {
+        } else if (!getHit) {
                 if (isLucky) {
                         actualMonster[3] -= currentDamage + 1;
-                        combatLogPara += `you're lucky and the blow is devastating.`;
+                        combatLog.innerHTML += `you're lucky and the blow is devastating.`;
                 } else {
                         actualMonster[3] -= currentDamage - 1;
-                        combatLogPara += `you're out of luck and you're only scratching of the monster.`;
+                        combatLog.innerHTML += `you're out of luck and you're only scratching of the monster.`;
                 }
 
         }
@@ -332,7 +331,7 @@ function killMonster() {
                 monsters.splice(target, 1);
                 console.log("Killed: " + actualMonster + "monsters.length: " + monsters.length);
                 update();
-                if (target >= monster.length) {
+                if (target >= monsters.length) {
                         target = 0;
                 }
         } else {
@@ -352,7 +351,6 @@ function update() {
                 <em>ENDURENCE: ${currentEndurence}</em><br>
                 <em>CHANCE: ${currentChance}</em><br>
                 <em>DAMAGE: ${currentDamage}</em>`;
-
         for (let i = 0; i < monsters.length; i++) {
                 let monsterFigure = document.getElementById(`monster${i + 1}`);
                 let temp = monsters[i];
@@ -362,7 +360,22 @@ function update() {
                         <em>ENDURENCE: </em>${temp[3]}<br>
                         <em>DAMAGE: </em>${temp[4]}</figcaption>
                         <img id="img1" src=${temp[6]} width="${temp[5]}"></img>`;
+        }
+}
 
+const actionsDiv = document.getElementById("actions");
+
+function gameOver() {
+        console.log(monsters.length)
+        if (monsters.length == 0) {
+                divHeader.innerHTML = "<header><h1>GAME OVER</h1></header>";
+                headerPara.innerHTML = "Thanks for playing";
+                mainPara.innerHTML = "";
+                footerPara.innerHTML = "";
+                // combatDiv.style.display = "none";
+                actionsDiv.style.display = "none";
+                combatLog.style.display = "none";
+                btnGoNext.style.display = "none";    
         }
 }
 
@@ -383,7 +396,7 @@ btnStart.addEventListener("click", function () {
         btnStart.style.display = "none";
         console.log("Starting the game ..");
         combatDiv.style.display = "inline";
-        creatMonster(getRandomIntInclusive(1, 6));
+        creatMonster(getRandomIntInclusive(3, 6));
         mainPara.innerHTML = "";
         headerPara.innerHTML = "";
         footerPara.innerHTML = "";
@@ -394,7 +407,6 @@ btnAttack.addEventListener("click", function () {
         btnGoNext.style.display = "inline";
         btnChance.style.display = "inline";
         btnQuestion.style.display = "inline";
-        btnFleeing.style.display = "none";
         setATarget();
         update();
 });
@@ -404,21 +416,18 @@ btnGoNext.addEventListener("click", function () {
         btnGoNext.style.display = "none";
         btnChance.style.display = "none";
         btnQuestion.style.display = "none";
-        btnFleeing.style.display = "inline";
         isNotUsingLuck();
         update();
+        gameOver();
 });
 btnChance.addEventListener("click", function () {
         btnAttack.style.display = "inline";
         btnGoNext.style.display = "none";
         btnChance.style.display = "none";
         btnQuestion.style.display = "none";
-        btnFleeing.style.display = "inline";
         isUsingLuck();
         update();
 });
 btnQuestion.addEventListener("click", function () {
         alert("You can use luck in combat to minimize the damage you take or deal more damage. You succeed at your luck roll if your total luck is less than or equal to a six-sided die plus a six-sided die. Each time you roll your luck, you deduct 1 from your total, and this continues for the rest of the game.");
-});
-btnFleeing.addEventListener("click", function () {
 });
